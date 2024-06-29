@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web FR1DA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" type="image/png" href="https://frida.re/favicon.ico">    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="section">
+                <h2>1 - Dispositivos ADB Conectados:</h2>
+                <div class="input-group">
+                    <select id="dispositivos">
+                        <option value="">Carregando..</option>
+                    </select>
+                    <button onclick="listarDispositivos()">Listar Dispositivos</button>
+                </div>
+            </div>
+            <div class="section">
+                <h2>2 - Configurar Proxy (Necessário root):</h2>
+                <div class="input-group">
+                    <label>Host: <input type="text" id="proxy_host" placeholder="127.0.0.1"></label>
+                    <label>Porta: <input type="text" id="proxy_port" placeholder="8080"></label>
+                    <button onclick="definirProxy()">Definir Proxy</button>
+                </div>
+            </div>
+            <div class="section">
+                <h2>3 - Pacotes de Aplicativos Instalados:</h2>
+                <div class="input-group">
+                    <select id="pacotes">
+                        <option value="">Selecionar</option>
+                    </select>
+                    <button onclick="listarPacotes()">Listar Pacotes</button>
+                </div>
+            </div>
+            <div class="section">
+                <h2>4 - Opções de Script Frida:</h2>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="chk_anti_root"> Anti Root</label>
+                    <label><input type="checkbox" id="chk_bypass_ssl"> Bypass SSL</label>
+                    <label><input type="checkbox" id="chk_full_crypto"> AES Crypto</label>
+                </div>
+            </div>
+            <div class="section">
+                <button onclick="executarFrida()" class="btn-executar"><strong>Executar Frida</strong></button>
+            </div>
+            <div class="section" id="button-grid">
+                <button onclick="rebootDevice()">Reiniciar Dispositivo</button>
+                <button onclick="adbReverse()">ADB Reverse</button>
+                <button onclick="startScreenRecording()">Gravar Tela</button>
+                <button onclick="captureScreen()">Capturar Tela</button>
+                <button onclick="adbShellLs()">Listar Arquivos</button>
+                <button class="clearText" onclick="clearOutput()">Limpar Console</button>
+            </div>
+        </div>
+        <div class="side-content">
+            <textarea id="terminal" placeholder="console" readonly></textarea>
+        </div>
+    </div>
+</body>
+</html>
