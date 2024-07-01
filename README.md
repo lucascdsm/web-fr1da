@@ -23,7 +23,8 @@ cd projeto-frida-web
 pip install -r requirements.txt
 
 python app.py
-http://127.0.0.1:5000
+
+Acesse: http://127.0.0.1:5000
 
 Contribuição
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests para melhorar o projeto.
