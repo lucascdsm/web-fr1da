@@ -16,7 +16,7 @@ Pré-requisitos
 Python 3.6+
 ADB instalado e configurado no PATH do sistema
 
-git clone https://github.com/k19x/projeto-frida-web.git
+git clone https://github.com/k19x/web-fr1da.git
 
 cd projeto-frida-web
 
