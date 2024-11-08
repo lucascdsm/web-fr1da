@@ -1,5 +1,6 @@
 # web-fr1da
 O Projeto FR1DA Web é uma aplicação interativa para administrar dispositivos Android via ADB e executar scripts Frida. Oferece funcionalidades como configuração de proxy, listagem de pacotes, execução de scripts de segurança, reinício de dispositivos, gravação e captura de tela, tudo em uma interface web amigável.
+![image](https://github.com/user-attachments/assets/772c0f4c-ed91-437e-b821-734e694fba15)
 
 Funcionalidades
 Listar Dispositivos ADB Conectados
