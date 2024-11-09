@@ -21,7 +21,7 @@ body {
 }
 
 .main-content {
-    flex: 2;
+    flex: 1.5;
     min-width: 350px;
 }
 
