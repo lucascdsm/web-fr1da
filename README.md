@@ -31,11 +31,11 @@ python app.py
 
 Acesse: http://127.0.0.1:5000
 
-Contribuição
+Contribuição - 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests para melhorar o projeto.
 
-Licença
+Licença - 
 Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mais detalhes.
 
-Contato
+Contato - 
 Para dúvidas ou sugestões, entre em contato com kiq.pascoal@outlook.com.
