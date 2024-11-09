@@ -3,6 +3,9 @@ O Projeto FR1DA Web é uma aplicação interativa para administrar dispositivos 
 
 ![image](https://github.com/user-attachments/assets/b84160dd-a0d1-439e-8ab0-80ffa8546f8c)
 
+![Animação](https://github.com/user-attachments/assets/8012eb42-36a9-4cad-a516-e561a4dd90d8)
+
+
 Funcionalidades
 Listar Dispositivos ADB Conectados
 Configurar Proxy (Necessário root)
@@ -35,4 +38,4 @@ Licença
 Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mais detalhes.
 
 Contato
-Para dúvidas ou sugestões, entre em contato com kiqx.pascoal@outlook.com.
+Para dúvidas ou sugestões, entre em contato com kiq.pascoal@outlook.com.
