@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.executarFrida = async function executarFrida() {
         const dispositivo = document.getElementById("dispositivos").value;
         const pacote = document.getElementById("pacotes").value;
-        const scriptElement = document.getElementById("script");
-        const script = scriptElement ? scriptElement.value : "";
+        // const customScript = document.getElementById("custom_script").value.trim(); // Script personalizado
         const scripts = [];
         if (document.getElementById("chk_anti_root").checked)
             scripts.push("frida-anti-root.js");
@@ -60,21 +59,26 @@ document.addEventListener("DOMContentLoaded", function () {
         if (document.getElementById("chk_full_crypto").checked)
             scripts.push("new-full-crypto.js");
         if (document.getElementById("chk_bypass_fingerprint").checked)
-            scripts.push("biometric-bypass.js"); // Novo script
-        if (script) scripts.push(script);
+            scripts.push("biometric-bypass.js");
 
-        if (!dispositivo || !pacote || scripts.length === 0) {
+        if (!dispositivo || !pacote) {
             const terminal = document.getElementById("terminal");
-            terminal.value +=
-                "Por favor, selecione um dispositivo, um pacote e ao menos uma opção de script.\n";
+            terminal.value += "Por favor, selecione um dispositivo e um pacote.\n";
             return;
         }
 
         const response = await fetch("/executar_frida", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ dispositivo, pacote, scripts, sid: socket.id }),
+            body: JSON.stringify({
+                dispositivo,
+                pacote,
+                scripts,
+                // customScript, // Adiciona o script personalizado enviado pelo frontend
+                sid: socket.id,
+            }),
         });
+
         const result = await response.json();
         const terminal = document.getElementById("terminal");
         terminal.value += JSON.stringify(result) + "\n";
@@ -186,4 +190,23 @@ document.addEventListener("DOMContentLoaded", function () {
         const terminal = document.getElementById("terminal");
         terminal.value += JSON.stringify(result) + "\n";
     };
+
+    // Listar arquivos
+    window.adbShellLs = async function adbShellLs() {
+        const dispositivo = document.getElementById('dispositivos').value;
+        if (!dispositivo) {
+            const terminal = document.getElementById('terminal');
+            terminal.value += 'Nenhum dispositivo selecionado\n';
+            return;
+        }
+        const response = await fetch('/adb_shell_ls', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ dispositivo })
+        });
+        const result = await response.json();
+        const terminal = document.getElementById('terminal');
+        terminal.value += result.join('\n') + '\n'; // Exibe um arquivo por linha
+    };
 });
+
