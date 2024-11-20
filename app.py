@@ -12,14 +12,34 @@ SCRIPT_PATH = os.path.join(os.environ['USERPROFILE'], 'Downloads', 'projeto-frid
 
 def executar_comando(comando, sid):
     try:
-        process = subprocess.Popen(comando, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        process = subprocess.Popen(
+            comando, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+        )
         for linha in iter(process.stdout.readline, ''):
             if linha:
-                socketio.emit('output', {'data': linha}, to=sid)
+                append_log_to_socket(linha.strip(), sid)
         process.stdout.close()
         process.wait()
     except Exception as e:
-        socketio.emit('output', {'data': f"Erro ao executar o comando: {e}\n"}, to=sid)
+        append_log_to_socket(f"Erro ao executar o comando: {e}", sid)
+    finally:
+        if process and process.poll() is None:
+            process.terminate()  # Garante que o subprocesso seja encerrado
+
+def append_log_to_socket(log_message, sid):
+    try:
+        socketio.emit('output', {'data': log_message}, to=sid)
+    except Exception as e:
+        print(f"Erro ao enviar log via SocketIO: {e}")
+
+def executar_comando_sync(comando):
+    try:
+        result = subprocess.run(
+            comando, shell=True, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
+        return result.stdout, result.stderr
+    except Exception as e:
+        return '', f"Erro: {e}"
 
 @app.route('/')
 def index():
@@ -85,6 +105,66 @@ def definir_proxy():
                 socketio.emit('output', {'data': stderr}, to=sid)
         
         return jsonify({'message': 'Proxy definido com sucesso'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@app.route('/remover_proxy', methods=['POST'])
+def remover_proxy():
+    dispositivo = request.json.get('dispositivo')
+    sid = request.json.get('sid')
+
+    if not dispositivo:
+        return jsonify({'error': 'Dispositivo não selecionado'}), 400
+
+    try:
+        # Comandos para remover proxy com aspas corrigidas
+        comandos = [
+            f'adb -s {dispositivo} shell "su -c \'settings put global http_proxy :0\'"',
+            f'adb -s {dispositivo} shell "su -c \'settings put global global_http_proxy_host \\\"\\\"\'"',
+            f'adb -s {dispositivo} shell "su -c \'settings put global global_http_proxy_port \\\"\\\"\'"',
+            f'adb -s {dispositivo} shell "su -c \'settings put global global_http_proxy_exclusion_list \\\"\\\"\'"'
+        ]
+
+        erros = []
+        for comando in comandos:
+            stdout, stderr = executar_comando_sync(comando)
+            if stderr:
+                erros.append(stderr)
+
+        if erros:
+            return jsonify({'error': 'Erro ao remover proxy', 'details': erros}), 500
+
+        return jsonify({'message': 'Proxy removido com sucesso'})
+    except Exception as e:
+        return jsonify({'error': f'Erro interno: {str(e)}'}), 500
+
+@app.route('/verificar_proxy', methods=['POST'])
+def verificar_proxy():
+    dispositivo = request.json.get('dispositivo')
+    sid = request.json.get('sid')
+
+    if not dispositivo:
+        return jsonify({'error': 'Dispositivo não selecionado'}), 400
+
+    try:
+        # Comandos para verificar proxy
+        comandos = {
+            "http_proxy": f'adb -s {dispositivo} shell "settings get global http_proxy"',
+            "global_http_proxy_host": f'adb -s {dispositivo} shell "settings get global global_http_proxy_host"',
+            "global_http_proxy_port": f'adb -s {dispositivo} shell "settings get global global_http_proxy_port"',
+            "global_http_proxy_exclusion_list": f'adb -s {dispositivo} shell "settings get global global_http_proxy_exclusion_list"'
+        }
+
+        resultados = {}
+        for chave, comando in comandos.items():
+            stdout, stderr = executar_comando_sync(comando)
+            if stderr:
+                append_log_to_socket(f"Erro ao verificar {chave}: {stderr}", sid)
+                resultados[chave] = f"Erro: {stderr}"
+            else:
+                resultados[chave] = stdout.strip()
+
+        return jsonify(resultados)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -159,7 +239,103 @@ def adb_shell_ls():
         return jsonify({'error': stderr}), 500
     files = [line.replace('package:', '') for line in stdout.splitlines()]
     return jsonify(files)
-    
+
+@app.route('/instalar_apk', methods=['POST'])
+def instalar_apk():
+    dispositivo = request.form.get('dispositivo')
+    arquivo = request.files.get('arquivo')
+
+    if not dispositivo or not arquivo:
+        return jsonify({'error': 'Dispositivo ou arquivo não fornecido'}), 400
+
+    caminho_arquivo = os.path.join('uploads', arquivo.filename)
+    os.makedirs('uploads', exist_ok=True)
+    arquivo.save(caminho_arquivo)
+
+    try:
+        comando = f'adb -s {dispositivo} install {caminho_arquivo}'
+        stdout, stderr = executar_comando_sync(comando)
+        if stderr:
+            return jsonify({'error': stderr}), 500
+        return jsonify({'message': 'APK instalado com sucesso'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        os.remove(caminho_arquivo)
+
+@app.route('/remover_app', methods=['POST'])
+def remover_app():
+    dispositivo = request.json.get('dispositivo')
+    pacote = request.json.get('pacote')
+
+    if not dispositivo or not pacote:
+        return jsonify({'error': 'Dispositivo ou pacote não fornecido'}), 400
+
+    try:
+        comando = f"adb -s {dispositivo} uninstall {pacote}"
+        stdout, stderr = executar_comando_sync(comando)
+        if stderr:
+            return jsonify({'error': stderr}), 500
+        return jsonify({'message': f'App {pacote} removido com sucesso!'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/limpar_pacote', methods=['POST'])
+def limpar_pacote():
+    dispositivo = request.json.get('dispositivo')
+    pacote = request.json.get('pacote')
+
+    if not dispositivo or not pacote:
+        return jsonify({'error': 'Dispositivo ou pacote não fornecido'}), 400
+
+    try:
+        comando = f"adb -s {dispositivo} shell pm clear {pacote}"
+        stdout, stderr = executar_comando_sync(comando)
+        if stderr:
+            return jsonify({'error': stderr}), 500
+        return jsonify({'message': f'Cache do pacote {pacote} limpo com sucesso!'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/execute_script', methods=['POST'])
+def execute_script():
+    data = request.json
+    dispositivo = data.get('dispositivo')
+    pacote = data.get('pacote')
+    script_content = data.get('script')
+
+    if not dispositivo:
+        return jsonify({'error': 'Nenhum dispositivo selecionado'}), 400
+
+    if not pacote:
+        return jsonify({'error': 'Nenhum pacote fornecido'}), 400
+
+    if not script_content:
+        return jsonify({'error': 'Nenhum script fornecido'}), 400
+
+    try:
+        # Salva o script em um arquivo temporário com UTF-8
+        script_path = os.path.join(SCRIPT_PATH, f"temp_script_{uuid4()}.js")
+        with open(script_path, 'w', encoding='utf-8') as script_file:
+            script_file.write(script_content)
+
+        # Executa o script usando Frida
+        comando = f"frida -D {dispositivo} -f {pacote} -l {script_path}"
+        stdout, stderr = executar_comando_sync(comando)
+
+        # Remove o arquivo temporário
+        os.remove(script_path)
+
+        if stderr:
+            return jsonify({'error': stderr}), 500
+
+        return jsonify({'message': 'Script executado com sucesso.', 'output': stdout})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    socketio.run(app, host="0.0.0.0", debug=True, use_reloader=False)
 
 def executar_comando_sync(comando):
     try:
