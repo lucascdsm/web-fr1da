@@ -1,55 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web FR1DA</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" type="image/png" href="https://frida.re/favicon.ico">    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+    <link id="theme-link" rel="stylesheet" href="{{ url_for('static', filename='css/hacker.css') }}">
 </head>
-<body>
+<body>   
     <div class="container">
         <div class="main-content">
             <div class="section">
-                <h2>Dispositivos conectados:</h2>
+                <h2>ESCOLHER TEMA:</h2>
+                <div class="input-group">
+                    <select id="theme-selector" onchange="changeTheme()">
+                        <option value="hacker">Hacker</option>
+                        <option value="linux_mint">Linux Mint</option>
+                        <option value="burp">Burp Suite</option>
+                        <option value="cyber_punk">Cyber Punk 2077</option>
+                        <option value="suave">Suave</option>
+                        <option value="tech">Tech</option>
+                        <option value="win7">Win7</option>
+                        <option value="matrix">Matrix</option>
+                        <option value="blue">Blue</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Seção de Dispositivos Conectados -->
+            <div class="section">
+                <h2>DISPOSITIVOS CONECTADOS:</h2>
                 <div class="input-group">
                     <select id="dispositivos">
                         <option value="">Carregando..</option>
                     </select>
-                    <button onclick="listarDispositivos()">Listar Dispositivos</button>
+                    <button onclick="listarDispositivos()">LISTAR DISPOSITIVOS</button>
                 </div>
             </div>
+
+                        <!-- Seção de Aplicativos Instalados -->
+                        <div class="section">
+                            <h2>APLICATIVOS INSTALADOS:</h2>
+                            <div class="input-group">
+                                <select id="pacotes">
+                                    <option value="">Selecionar</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <select id="dispositivos_upload">
+                                    <option value="">Selecionar dispositivo</option>
+                                </select>
+                                <input type="file" id="apk_file" accept=".apk">
+                                <button onclick="instalarAPK()">INSTALAR APK</button>
+                                <button onclick="removerApp()">REMOVER APK</button>
+                                <button onclick="limparPacote()">LIMPAR APK</button>
+                            </div>
+                        </div>
+
+            <!-- Seção de Configuração de Proxy -->
             <div class="section">
-                <h2>Configurar proxy na raiz:</h2>
+                <h2>CONFIGURAR PROXY NA RAIZ:</h2>
                 <div class="input-group">
-                    <label>Host: <input type="text" id="proxy_host" placeholder="127.0.0.1"></label>
-                    <label>Porta: <input type="text" id="proxy_port" placeholder="8080"></label>
-                    <button onclick="definirProxy()">Definir Proxy</button>
+                    <label>HOST: <input type="text" id="proxy_host" placeholder="127.0.0.1"></label>
+                    <label>PORTA: <input type="text" id="proxy_port" placeholder="8080"></label>
+                    <button onclick="definirProxy()">DEFINIR PROXY</button>
+                    <button onclick="verificarProxy()">VERIFICAR PROXY</button>
+                    <button onclick="removerProxy()">REMOVER PROXY</button>
+
                 </div>
             </div>
-            <div class="section">
-                <h2>Aplicativos instalados:</h2>
-                <div class="input-group">
-                    <select id="pacotes">
-                        <option value="">Selecionar</option>
-                    </select>
-                    <button onclick="listarPacotes()">Listar Pacotes</button>
-                </div>
-            </div>
-            <div class="section">
-                <h2>Opções de scripts Frida:</h2>
-                <div class="checkbox-group">
-                    <label><input type="checkbox" id="chk_anti_root"> Anti Root</label>
-                    <label><input type="checkbox" id="chk_bypass_ssl"> Bypass SSL</label>
-                    <label><input type="checkbox" id="chk_full_crypto"> AES Crypto</label>
-                    <label><input type="checkbox" id="chk_bypass_fingerprint"> Bypass Fingerprint</label> <!-- Novo checkbox -->
-                </div>
-            </div>
-            <div class="section">
-                <button onclick="executarFrida()" class="btn-executar"><strong>Executar Frida</strong></button>
-            </div>
+
+
+
+<!-- Execução de Scripts Próprios -->
+<div class="section">
+    <h2>EXECUTAR SCRIPTS PRÓPRIOS:</h2>
+    <div class="input-group">
+        <input type="file" id="custom_script" accept=".js">
+        <button onclick="executeSelectedScript()">EXECUTAR SCRIPT</button>
+    </div>
+</div>
+
+            <!-- Botão de Execução do Frida -->
+
+
+            <!-- Seção de Ações Diversas -->
             <div class="section" id="button-grid">
                 <button onclick="rebootDevice()">Reiniciar Dispositivo</button>
                 <button onclick="adbReverse()">ADB Reverse</button>
@@ -59,9 +95,21 @@
                 <button class="clearText" onclick="clearOutput()">Limpar Console</button>
             </div>
         </div>
+
+        <!-- Terminal -->
         <div class="side-content">
-            <span>Terminal</span>
             <textarea id="terminal" placeholder="console" readonly></textarea>
+                        <!-- Seção de Opções de Scripts Frida -->
+                        <div class="section">
+                            <h2>OPÇÕES DE SCRIPTS FRIDA:</h2>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" id="chk_anti_root"> ANTI ROOT</label>
+                                <label><input type="checkbox" id="chk_bypass_ssl"> BYPASS SSL</label>
+                                <label><input type="checkbox" id="chk_full_crypto"> AES CRYPTO</label>
+                                <label><input type="checkbox" id="chk_bypass_fingerprint"> BYPASS FINGERPRINT</label>
+                                    <button onclick="executarFrida()" class="btn-executar"><strong>Executar Frida</strong></button>
+                            </div>
+                        </div>
         </div>
     </div>
 </body>
