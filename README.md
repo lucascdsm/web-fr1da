@@ -2,7 +2,7 @@
 O Projeto FR1DA Web é uma aplicação interativa para administrar dispositivos Android via ADB e executar scripts Frida. Oferece funcionalidades como configuração de proxy, listagem de pacotes, execução de scripts de segurança, reinício de dispositivos, gravação e captura de tela, tudo em uma interface web amigável.
 
 ![image](https://github.com/user-attachments/assets/bbad24aa-7060-47ca-adb9-0c13938b7d3e)
-                                  Figura 1 - Tema Burp Suite Dark
+                                  Figura 1 - Tema Hacker
 
 ![image](https://github.com/user-attachments/assets/a70d48cf-e094-42ce-9fa5-3db6d0e02f7a)
                                   Figura 2 - Tema Cyber Punk 2077
