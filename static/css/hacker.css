@@ -113,20 +113,20 @@ textarea {
 }
 
 .side-content textarea {
-    height: 800px; /* Aumenta o espaço vertical do terminal */
-    width: 100%; /* Ocupa toda a largura disponível */
+    height: 690px;
+    width: 761px;
     border: 1px solid #00FF41;
     background-color: #0D0D0D;
     color: #00FF41;
     font-family: 'Courier New', monospace;
     font-size: 12px;
     resize: none; /* Impede redimensionamento */
-    margin-top: 10px;
+    margin-top: -10px;
     padding: 10px;
 }
 
 .btn-executar {
-    width: 100%;
+    width: 16%;
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;

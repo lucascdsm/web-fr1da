@@ -1,8 +1,8 @@
 /* Layout minimalista com estilo hacker */
 body {
     font-family: 'Courier New', monospace;
-    background-color: #0D0D0D;
-    color: #00FF41;
+    background-color: #1E1E1E; /* Fundo escuro */
+    color: #D4D4D4; /* Texto em cinza claro */
     margin: 0;
     padding: 0;
 }
@@ -12,8 +12,8 @@ body {
     flex-wrap: wrap;
     margin: 20px auto;
     padding: 20px;
-    background-color: #101010;
-    border: 1px solid #00FF41;
+    background-color: #2D2D30; /* Fundo levemente mais claro */
+    border: 1px solid #3C3C3C; /* Borda cinza escuro */
     border-radius: 8px;
     width: 96%;
     max-width: 100%;
@@ -31,43 +31,43 @@ body {
 .side-content {
     flex: 1;
     min-width: 250px;
-    border-left: 1px solid #00FF41;
-    margin-top: 10px;
+    border-left: 1px solid #3C3C3C; /* Linha divisória cinza */
+    margin-top: -10px;
 }
 
 h2 {
     margin-bottom: 10px;
-    color: #00FF41;
+    color: #D4D4D4; /* Cinza claro */
     font-size: 18px;
-    border-bottom: 1px solid #00FF41;
+    border-bottom: 1px solid #3C3C3C; /* Linha separadora */
     padding-bottom: 5px;
 }
 
 .section {
     margin-bottom: 15px;
     padding: 10px;
-    background-color: #0D0D0D;
-    border: 1px solid #00FF41;
+    background-color: #2D2D30; /* Fundo da seção */
+    border: 1px solid #3C3C3C;
     border-radius: 5px;
 }
 
 .input-group,
 .checkbox-group {
     display: flex;
-    align-items: center; /* Alinha os elementos verticalmente */
-    gap: 15px; /* Aumenta o espaço entre os elementos */
-    margin-bottom: 15px; /* Adiciona espaço inferior ao grupo */
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 .input-group label {
-    flex: 1; /* Faz os inputs ocuparem mais espaço */
+    flex: 1;
 }
 
 .input-group button {
-    flex-shrink: 0; /* Impede que o botão encolha */
-    padding: 10px 15px; /* Ajusta o tamanho do botão */
+    flex-shrink: 0;
+    padding: 10px 15px;
     font-size: 14px;
-    margin-left: 10px; /* Espaçamento específico para o botão */
+    margin-left: 10px;
 }
 
 input[type="text"],
@@ -76,9 +76,9 @@ textarea {
     width: 100%;
     height: 40%;
     padding: 4px;
-    border: 1px solid #00FF41;
-    background-color: #0D0D0D;
-    color: #00FF41;
+    border: 1px solid #3C3C3C; /* Borda neutra */
+    background-color: #3C3C3C; /* Fundo cinza escuro */
+    color: #D4D4D4; /* Texto cinza claro */
     border-radius: 5px;
     font-family: 'Courier New', monospace;
 }
@@ -87,15 +87,16 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    border-color: #33FF66;
-    box-shadow: 0 0 8px #33FF66;
+    border-color: #569CD6; /* Azul destaque */
+    box-shadow: 0 0 8px #569CD6;
 }
 
 button {
     padding: 10px 15px;
-    border: 1px solid #00FF41;
-    background-color: transparent;
-    color: #00FF41;
+    border: 1px solid #3C3C3C; /* Borda cinza escuro */
+    border-radius: 5px;
+    background-color: rgb(76, 80, 82);
+    color: #D4D4D4; /* Texto cinza claro */
     font-family: 'Courier New', monospace;
     font-size: 14px;
     cursor: pointer;
@@ -103,52 +104,54 @@ button {
 }
 
 button:hover {
-    background-color: #00FF41;
-    color: #0D0D0D;
+    background-color: #569CD6; /* Azul ao passar o mouse */
+    color: #FFF; /* Texto branco */
 }
 
 textarea {
     height: 200px;
     resize: none;
+    background-color: #3C3C3C; /* Fundo cinza escuro */
+    color: #D4D4D4; /* Texto cinza claro */
 }
 
 .side-content textarea {
-    height: 800px; /* Aumenta o espaço vertical do terminal */
-    width: 100%; /* Ocupa toda a largura disponível */
-    border: 1px solid #00FF41;
-    background-color: #0D0D0D;
-    color: #00FF41;
+    height: 690px;
+    width: 757px;
+    border: 1px solid #3C3C3C;
+    background-color: #3C3C3C;
+    color: #D4D4D4;
     font-family: 'Courier New', monospace;
     font-size: 12px;
-    resize: none; /* Impede redimensionamento */
+    resize: none;
     margin-top: 10px;
     padding: 10px;
 }
 
 .btn-executar {
-    width: 100%;
+    width: 16%;
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
-    background-color: #00FF41;
-    color: #0D0D0D;
+    background-color: rgb(216, 102, 51); /* Azul principal */
+    color: #FFF; /* Texto branco */
     border: none;
     transition: background-color 0.3s ease;
 }
 
 .btn-executar:hover {
-    background-color: #33FF66;
+    background-color: #005A9E; /* Azul mais escuro */
 }
 
 .clearText {
-    background-color: #FF4141;
-    color: #FFF;
+    background-color: #D9534F; /* Vermelho claro */
+    color: #FFF; /* Texto branco */
     font-weight: bold;
     border: none;
 }
 
 .clearText:hover {
-    background-color: #FF6666;
+    background-color: #C9302C; /* Vermelho escuro */
 }
 
 #button-grid {
@@ -157,7 +160,6 @@ textarea {
     gap: 10px;
 }
 
-/* Estilo responsivo */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -181,11 +183,3 @@ textarea {
 button {
     margin-top: 10px;
 }
-#apk_file {
-    margin: 10px 0;
-}
-
-button {
-    margin-top: 10px;
-}
-

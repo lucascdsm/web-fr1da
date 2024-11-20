@@ -1,8 +1,8 @@
-/* Layout minimalista com estilo hacker */
+/* Layout minimalista com estilo confortável */
 body {
     font-family: 'Courier New', monospace;
-    background-color: #0D0D0D;
-    color: #00FF41;
+    background-color: #F8F9FA; /* Fundo cinza claro */
+    color: #2D2D2D; /* Texto cinza escuro */
     margin: 0;
     padding: 0;
 }
@@ -12,8 +12,8 @@ body {
     flex-wrap: wrap;
     margin: 20px auto;
     padding: 20px;
-    background-color: #101010;
-    border: 1px solid #00FF41;
+    background-color: #FFFFFF; /* Fundo branco */
+    border: 1px solid #D6D6D6; /* Borda cinza suave */
     border-radius: 8px;
     width: 96%;
     max-width: 100%;
@@ -21,6 +21,7 @@ body {
 
 .main-content, .side-content {
     padding: 10px;
+    background-color: #FFFFFF; /* Fundo branco */
 }
 
 .main-content {
@@ -31,23 +32,23 @@ body {
 .side-content {
     flex: 1;
     min-width: 250px;
-    border-left: 1px solid #00FF41;
+    border-left: 1px solid #D6D6D6; /* Linha divisória suave */
     margin-top: 10px;
 }
 
 h2 {
     margin-bottom: 10px;
-    color: #00FF41;
+    color: #4A90E2; /* Azul claro */
     font-size: 18px;
-    border-bottom: 1px solid #00FF41;
+    border-bottom: 1px solid #D6D6D6; /* Linha separadora suave */
     padding-bottom: 5px;
 }
 
 .section {
     margin-bottom: 15px;
     padding: 10px;
-    background-color: #0D0D0D;
-    border: 1px solid #00FF41;
+    background-color: #FAFAFA; /* Fundo cinza muito claro */
+    border: 1px solid #D6D6D6; /* Borda cinza clara */
     border-radius: 5px;
 }
 
@@ -76,9 +77,9 @@ textarea {
     width: 100%;
     height: 40%;
     padding: 4px;
-    border: 1px solid #00FF41;
-    background-color: #0D0D0D;
-    color: #00FF41;
+    border: 1px solid #D6D6D6; /* Borda cinza clara */
+    background-color: #FFFFFF; /* Fundo branco */
+    color: #2D2D2D; /* Texto cinza escuro */
     border-radius: 5px;
     font-family: 'Courier New', monospace;
 }
@@ -87,15 +88,15 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    border-color: #33FF66;
-    box-shadow: 0 0 8px #33FF66;
+    border-color: #4A90E2; /* Azul claro no foco */
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5); /* Sombra azul no foco */
 }
 
 button {
     padding: 10px 15px;
-    border: 1px solid #00FF41;
-    background-color: transparent;
-    color: #00FF41;
+    border: 1px solid #4A90E2; /* Azul claro */
+    background-color: #4A90E2; /* Azul claro */
+    color: #FFFFFF; /* Texto branco */
     font-family: 'Courier New', monospace;
     font-size: 14px;
     cursor: pointer;
@@ -103,21 +104,23 @@ button {
 }
 
 button:hover {
-    background-color: #00FF41;
-    color: #0D0D0D;
+    background-color: #5FA6E8; /* Azul mais claro */
+    color: #FFFFFF; /* Texto branco */
 }
 
 textarea {
     height: 200px;
     resize: none;
+    background-color: #FFFFFF; /* Fundo branco */
+    color: #2D2D2D; /* Texto cinza escuro */
 }
 
 .side-content textarea {
-    height: 800px; /* Aumenta o espaço vertical do terminal */
-    width: 100%; /* Ocupa toda a largura disponível */
-    border: 1px solid #00FF41;
-    background-color: #0D0D0D;
-    color: #00FF41;
+    height: 880px; /* Aumenta o espaço vertical do terminal */
+    width: 750px; /* Ocupa toda a largura disponível */
+    border: 1px solid #D6D6D6; /* Borda cinza clara */
+    background-color: #FFFFFF; /* Fundo branco */
+    color: #2D2D2D; /* Texto cinza escuro */
     font-family: 'Courier New', monospace;
     font-size: 12px;
     resize: none; /* Impede redimensionamento */
@@ -130,25 +133,25 @@ textarea {
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
-    background-color: #00FF41;
-    color: #0D0D0D;
+    background-color: #4A90E2; /* Azul claro */
+    color: #FFFFFF; /* Texto branco */
     border: none;
     transition: background-color 0.3s ease;
 }
 
 .btn-executar:hover {
-    background-color: #33FF66;
+    background-color: #5FA6E8; /* Azul mais claro */
 }
 
 .clearText {
-    background-color: #FF4141;
+    background-color: #D9534F; /* Vermelho suave */
     color: #FFF;
     font-weight: bold;
     border: none;
 }
 
 .clearText:hover {
-    background-color: #FF6666;
+    background-color: #E57373; /* Vermelho mais claro */
 }
 
 #button-grid {
@@ -181,11 +184,3 @@ textarea {
 button {
     margin-top: 10px;
 }
-#apk_file {
-    margin: 10px 0;
-}
-
-button {
-    margin-top: 10px;
-}
-
