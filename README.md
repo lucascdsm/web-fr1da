@@ -1,19 +1,31 @@
 # web-fr1da
 O Projeto FR1DA Web é uma aplicação interativa para administrar dispositivos Android via ADB e executar scripts Frida. Oferece funcionalidades como configuração de proxy, listagem de pacotes, execução de scripts de segurança, reinício de dispositivos, gravação e captura de tela, tudo em uma interface web amigável.
 
-![image](https://github.com/user-attachments/assets/68edee91-be70-4507-9a62-65005bca97c5)
+![image](https://github.com/user-attachments/assets/2b966885-dfbb-4a9a-ab1d-cd2befc48bf7)
+                                  Figura 1 - Tema hacker
+
+![image](https://github.com/user-attachments/assets/bbad24aa-7060-47ca-adb9-0c13938b7d3e)
+                                  Figura 2 - Tema Burp Suite Dark
+
+![image](https://github.com/user-attachments/assets/a70d48cf-e094-42ce-9fa5-3db6d0e02f7a)
+                                  Figura 3 - Tema Cyber Punk 2077
+                                  
+![web-frida](https://github.com/user-attachments/assets/250e6962-3cab-46ec-ac98-7c15f00adfb1)
+                                  Figura 4 - Aplicação em ação
 
 Funcionalidades
 Listar Dispositivos ADB Conectados
-Configurar Proxy (Necessário root)
-Listar Pacotes de Aplicativos Instalados
-Executar Scripts Frida (Anti Root, Bypass SSL, AES Crypto)
+Configurar Proxy (Verificar, Aplicar e Remover)
+Listar Pacotes de Aplicativos Instalados (Limpar e Remover)
+Executar Scripts Frida (Anti Root, Bypass SSL, Bypass FingerPrint, AES Crypto)
 Reiniciar Dispositivo
 ADB Reverse
 Gravação de Tela
 Captura de Tela
-Listar Arquivos
+Listagem de Arquivos (Dir: /sdcard/)
 Limpar Console
+
+
 Pré-requisitos
 Python 3.6+
 ADB instalado e configurado no PATH do sistema
